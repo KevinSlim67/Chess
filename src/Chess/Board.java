@@ -26,7 +26,6 @@ public class Board extends JPanel {
                 chessCase[i][j] = new JPanel();
                 chessCase[i][j].setBorder(border);
                 chessCase[i][j].setOpaque(false);
-
             }
         }
 
@@ -54,7 +53,6 @@ public class Board extends JPanel {
 
             setClickCase(x[i], y[i], piece);
             chessCase[x[i]][y[i]].addMouseListener(getClickCase(x[i], y[i]));
-            //test
         }
     }
 
