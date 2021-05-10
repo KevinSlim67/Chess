@@ -19,4 +19,5 @@ public class Piece extends JButton {
                 getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT)));
     }
 }
+//test
 

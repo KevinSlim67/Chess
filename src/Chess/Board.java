@@ -54,6 +54,7 @@ public class Board extends JPanel {
 
             setClickCase(x[i], y[i], piece);
             chessCase[x[i]][y[i]].addMouseListener(getClickCase(x[i], y[i]));
+            //test
         }
     }
 
