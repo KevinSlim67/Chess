@@ -6,15 +6,16 @@ import java.awt.*;
 public class Main {
     public static void main(String args[]) {
         final int NUM = 650;
-        int width = NUM; int height = NUM;
+        int width = NUM;
+        int height = NUM;
         Frame frame = new Frame(width, height, "Chess");
-        frame.setLayout(new BorderLayout(0,0));
+        frame.setLayout(new BorderLayout(0, 0));
 
         JPanel[] panel = new JPanel[4];
-        for (int i = 0; i < 4 ; i++) {
+        for (int i = 0; i < 4; i++) {
             panel[i] = new JPanel();
             panel[i].setOpaque(false);
-            panel[i].setPreferredSize(new Dimension(100,100));
+            panel[i].setPreferredSize(new Dimension(100, 100));
             panel[i].setVisible(true);
         }
 

@@ -42,48 +42,25 @@ public class Board extends JPanel {
         }
     }
 
-    static MouseAdapter[][] clickCase = new MouseAdapter[8][8];
+    public static MouseAdapter[][] clickCase = new MouseAdapter[8][8];
 
-    public static void highlight(int[] x, int[] y, Piece piece) {
-        Border border = BorderFactory.createLineBorder(new Color(0x94dccb), 2);
-
-        for (int i = 0; i < x.length; i++) {
-            chessCase[x[i]][y[i]].setBorder(border);
-            chessCase[x[i]][y[i]].repaint();
-
-            setClickCase(x[i], y[i], piece);
-            chessCase[x[i]][y[i]].addMouseListener(getClickCase(x[i], y[i]));
-        }
-    }
 
     public static void unHighlightAll() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 chessCase[i][j].setBorder(null);
-                chessCase[i][j].removeMouseListener(getClickCase(i, j)); //the mouse listener is not being removed after
-                chessCase[i][j].repaint();                              // this function is being executed
+                chessCase[i][j].removeMouseListener(getClickCase(i, j));
+                chessCase[i][j].repaint();
             }
         }
     }
 
-    private static void setClickCase(int x, int y, Piece piece) {
-        chessCase[x][y].removeMouseListener(getClickCase(x,y));
-        clickCase[x][y] = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                Board.setPiece(piece, x, y);
-                unHighlightAll();
-                }
-        };
+    public static void setClickCase(int x, int y, Piece piece) {
+        piece.movement(piece.currentX, piece.currentY, piece);
     }
 
-    private static MouseAdapter getClickCase(int x, int y) {
+    public static MouseAdapter getClickCase(int x, int y) {
         return clickCase[x][y];
-    }
-
-    public static void setPiece(JButton b, int x, int y) {
-        chessCase[x][y].add(b, 0);
     }
 
     public static JPanel getCase(int x, int y) {
