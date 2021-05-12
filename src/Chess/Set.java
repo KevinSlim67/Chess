@@ -1,5 +1,6 @@
 package Chess;
 
+import Chess.Pieces.BlackPawn;
 import Chess.Pieces.Piece;
 import Chess.Pieces.WhiteKing;
 import Chess.Pieces.WhitePawn;
@@ -16,8 +17,12 @@ public class Set extends Board {
         for (int i = 0; i < 8; i++) {
             whitePawn[i] = new WhitePawn(6, i);
             whitePawn[i].setPiece(whitePawn[i], 6, i);
-            whitePawn[i].setCurrentX(6);
-            whitePawn[i].setCurrentY(i);
+        }
+
+        BlackPawn[] blackPawn = new BlackPawn[8];
+        for (int i = 0; i < 8; i++) {
+            blackPawn[i] = new BlackPawn(1, i);
+            blackPawn[i].setPiece(blackPawn[i], 1, i);
         }
 
 

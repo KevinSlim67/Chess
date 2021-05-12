@@ -12,8 +12,6 @@ import java.awt.event.*;
 public class Board extends JPanel {
     public static JPanel[][] chessCase = new JPanel[8][8];
     public static boolean[][] hasPiece = new boolean[8][8];
-    int width;
-    int height;
 
     public Board(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
@@ -57,7 +55,7 @@ public class Board extends JPanel {
     }
 
     public static void setClickCase(int x, int y, Piece piece) {
-        piece.movement(piece.currentX, piece.currentY, piece);
+        piece.movement(piece.getCurrentX(), piece.getCurrentY(), piece);
     }
 
     public static MouseAdapter getClickCase(int x, int y) {
@@ -68,10 +66,18 @@ public class Board extends JPanel {
         return chessCase[x][y];
     }
 
+    public static boolean[][] clickedCase = new boolean[8][8];
+    public static void setAllClickedCaseFalse() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                clickedCase[i][j] = false;
+            }
+        }
+    }
+
     public static void removePiece(JButton b, int i, int j) {
         chessCase[i][j].remove(b);
         chessCase[i][j].repaint();
-
     }
 }
 

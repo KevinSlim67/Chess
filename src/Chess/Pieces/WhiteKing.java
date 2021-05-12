@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class WhiteKing extends Piece implements ActionListener {
     public WhiteKing() {
-        super("white_king.png", Board.getCase(7,4), 1);
+        super("white_king.png", Board.getCase(7,4));
         this.addActionListener(this);
     }
 
