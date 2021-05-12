@@ -9,7 +9,8 @@ public class Set extends Board {
     public Set(int width, int height) {
         super(width, height);
 
-        //setPiece(new WhiteKing(), 7, 3);
+        WhiteKing whiteKing = new WhiteKing();
+        whiteKing.setPiece(whiteKing,4, 4);
 
         WhitePawn[] whitePawn = new WhitePawn[8];
         for (int i = 0; i < 8; i++) {

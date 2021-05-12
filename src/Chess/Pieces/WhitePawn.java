@@ -32,6 +32,9 @@ public class WhitePawn extends Piece implements ActionListener {
                     this.highlight(currentX - 1, currentY, this);
                     this.highlight(currentX - 2, currentY, this);
                 }
+                for (int i = currentX - 1; i >= currentX - 4; i--) {
+                    hasCollision(i, currentY);
+                }
             } else {
                 Board.unHighlightAll();
 
@@ -53,6 +56,15 @@ public class WhitePawn extends Piece implements ActionListener {
                 Board.unHighlightAll();
             }
         };
+    }
+
+    @Override
+    public void hasCollision(int x, int y) {
+        if (Board.hasPiece[x][y]) {
+            for (int i = x; i >= 0; i--) {
+                this.unHighlight(i, y);
+            }
+        }
     }
 }
 

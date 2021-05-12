@@ -11,6 +11,7 @@ import java.awt.event.*;
 
 public class Board extends JPanel {
     public static JPanel[][] chessCase = new JPanel[8][8];
+    public static boolean[][] hasPiece = new boolean[8][8];
     int width;
     int height;
 
