@@ -9,11 +9,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public abstract class Piece extends JButton {
-    int currentX;
-    int currentY;
-    boolean clicked = false;
+    protected int currentX;
+    protected int currentY;
 
-    public Piece(String piecePath, JPanel panel) {
+    public Piece(String piecePath) {
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setFocusable(false);
@@ -24,35 +23,79 @@ public abstract class Piece extends JButton {
                 getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT)));
     }
 
+    //highlight methods------------------------------------------------------------------------------
     public void highlight(int x, int y, Piece piece) {
-        Board.setAllClickedCaseFalse();
+        Board.setAllClickedCaseFalse(); //avoids having to click twice on a piece after clicking on another one
         Border border = BorderFactory.createLineBorder(new Color(0x94dccb), 2);
         Board.getCase(x, y).setBorder(border);
         Board.getCase(x, y).repaint();
-        movement(x, y, piece); //responsible for moving the piece to the selected highlighted case
-        Board.getCase(x, y).addMouseListener(Board.getClickCase(x, y)); //needs to stay
+
+        if (Board.hasPiece[x][y]) {
+            kill(x, y, piece); //kills the piece at x, y
+
+        } else {
+            movement(x, y, piece); //responsible for moving the piece to the selected highlighted case
+        }
+        Board.getCase(x, y).addMouseListener(Board.clickMouseListener[x][y]); //needs to stay
     }
 
     public static void unHighlight(int x, int y) {
         Board.getCase(x, y).setBorder(null);
-        Board.getCase(x, y).removeMouseListener(Board.getClickCase(x, y));
+        Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
+        try {
+            Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
+        } catch (Exception e) {}
         Board.getCase(x, y).repaint();
     }
+    //-----------------------------------------------------------------------------------------------
 
 
-    public void movement(int curX, int curY, Piece piece) {
-        Board.getCase(curX, curY).removeMouseListener(Board.clickCase[curX][curY]);
-        Board.clickCase[curX][curY] = new MouseAdapter() {
+    public void movement(int x, int y, Piece piece) {
+        Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
+        Board.clickMouseListener[x][y] = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //prevents having to click twice a case you clicked on once, then switched highlights from
+                //prevents having to click twice a case you clicked on once, then that you switched highlights from
                 //also solves the bug of having to click twice after moving a piece
                 Board.setAllClickedCaseFalse();
-                piece.setPiece(piece, curX, curY);
-                setCurrentX(curX);
-                setCurrentY(curY);
-                Board.unHighlightAll(); //gets rid of extra highlights onc you've picked the one you want
+
+                //shows on the terminal what movement just happened
+                System.out.println("moved " + piece.getClass().getSimpleName() +
+                        " from (" + currentX + " , " + currentY + "), to (" + x + " , " + y + ")");
+
+                Board.hasPiece[currentX][currentY] = false;
+                piece.setPiece(piece, x, y);
+                Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
+
+            }
+        };
+    }
+
+    public void kill(int x, int y, Piece piece) {
+        movement(x, y, piece);
+        Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
+        try {
+            Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
+        } catch (Exception e) {
+        }
+        Board.clickMouseListener[x][y] = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                //prevents having to click twice a case you clicked on once, then that you switched highlights from
+                //also solves the bug of having to click twice after moving a piece
+                Board.setAllClickedCaseFalse();
+
+                //shows on the terminal what piece got killed, and by which piece it got killed
+                System.out.println("killed " + Board.getPiece(x, y).getClass().getSimpleName() +
+                        " at (" + x + " , " + y + ") by " + piece.getClass().getSimpleName() + " at (" +
+                        currentX + " , " + currentY + ")");
+
+                Board.hasPiece[currentX][currentY] = false;
+                Board.removePiece(x, y);
+                piece.setPiece(piece, x, y);
+                Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
             }
         };
     }
@@ -60,21 +103,21 @@ public abstract class Piece extends JButton {
     public void hasCollision(int x, int y) {
     }
 
-    public void setPiece(JButton b, int x, int y) {
-        Board.getCase(x, y).add(b, 0);
+    public void detectKill(int x, int y, Piece piece) {
+    }
+
+    public void unDetectKill(int x, int y) {
+
+    }
+
+    public void setPiece(Piece piece, int x, int y) {
+        Board.getCase(x, y).add(piece, 0);
         Board.hasPiece[x][y] = true;
         this.setCurrentX(x);
         this.setCurrentY(y);
     }
 
-    public int getCurrentX() {
-        return currentX;
-    }
-
-    public int getCurrentY() {
-        return currentY;
-    }
-
+    //set X,Y methods--------------------------------------------------------
     public void setCurrentX(int x) {
         currentX = x;
     }
@@ -83,5 +126,8 @@ public abstract class Piece extends JButton {
         currentY = y;
     }
 
+    //------------------------------------------------------------------------
+
 }
+
 

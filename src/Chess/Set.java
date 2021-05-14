@@ -15,13 +15,13 @@ public class Set extends Board {
 
         WhitePawn[] whitePawn = new WhitePawn[8];
         for (int i = 0; i < 8; i++) {
-            whitePawn[i] = new WhitePawn(6, i);
+            whitePawn[i] = new WhitePawn();
             whitePawn[i].setPiece(whitePawn[i], 6, i);
         }
 
         BlackPawn[] blackPawn = new BlackPawn[8];
         for (int i = 0; i < 8; i++) {
-            blackPawn[i] = new BlackPawn(1, i);
+            blackPawn[i] = new BlackPawn();
             blackPawn[i].setPiece(blackPawn[i], 1, i);
         }
 

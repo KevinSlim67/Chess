@@ -1,6 +1,5 @@
 package Chess;
 
-import Chess.Pieces.Piece;
 import Chess.Tiles.BrownTile;
 import Chess.Tiles.WhiteTile;
 
@@ -10,8 +9,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Board extends JPanel {
-    public static JPanel[][] chessCase = new JPanel[8][8];
-    public static boolean[][] hasPiece = new boolean[8][8];
+    private static JPanel[][] chessCase = new JPanel[8][8];
+    public static boolean[][] hasPiece = new boolean[8][8]; //don't make private
+    public static MouseAdapter[][] clickMouseListener = new MouseAdapter[8][8]; //don't make private
 
     public Board(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
@@ -20,11 +20,13 @@ public class Board extends JPanel {
         this.setBorder(border);
         this.setVisible(true);
 
+        //generates all 64 cases, each one them as panel to store things
         for (int i = 0; i < chessCase.length; i++) {
             for (int j = 0; j < chessCase[i].length; j++) {
                 chessCase[i][j] = new JPanel();
                 chessCase[i][j].setBorder(border);
                 chessCase[i][j].setOpaque(false);
+
             }
         }
 
@@ -41,32 +43,20 @@ public class Board extends JPanel {
         }
     }
 
-    public static MouseAdapter[][] clickCase = new MouseAdapter[8][8];
+    //----------------------------------------------------------------------------
 
 
-    public static void unHighlightAll() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                chessCase[i][j].setBorder(null);
-                chessCase[i][j].removeMouseListener(getClickCase(i, j));
-                chessCase[i][j].repaint();
-            }
-        }
+    //clickedCase methods--------------------------------------------------------
+    private static boolean[][] clickedCase = new boolean[8][8];
+
+    public static void setClickedCase(int x, int y, boolean value) {
+        clickedCase[x][y] = value;
     }
 
-    public static void setClickCase(int x, int y, Piece piece) {
-        piece.movement(piece.getCurrentX(), piece.getCurrentY(), piece);
+    public static boolean getClickedCase(int x, int y) {
+        return clickedCase[x][y];
     }
 
-    public static MouseAdapter getClickCase(int x, int y) {
-        return clickCase[x][y];
-    }
-
-    public static JPanel getCase(int x, int y) {
-        return chessCase[x][y];
-    }
-
-    public static boolean[][] clickedCase = new boolean[8][8];
     public static void setAllClickedCaseFalse() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -74,10 +64,36 @@ public class Board extends JPanel {
             }
         }
     }
+    //----------------------------------------------------------------------------
 
-    public static void removePiece(JButton b, int i, int j) {
-        chessCase[i][j].remove(b);
-        chessCase[i][j].repaint();
+    public static void unHighlightAll() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                try {
+                    getPiece(i, j).setEnabled(true);
+                    getPiece(i, j).removeMouseListener(Board.clickMouseListener[i][j]);
+                } catch (Exception e) {
+                }
+                getCase(i, j).setBorder(null);
+                getCase(i, j).removeMouseListener(Board.clickMouseListener[i][j]);
+                getCase(i, j).repaint();
+            }
+        }
+    }
+
+    public static void removePiece(int x, int y) {
+        getCase(x, y).remove(0);
+        Board.hasPiece[x][y] = false;
+        getCase(x, y).repaint();
+    }
+
+
+    public static Component getPiece(int x, int y) {
+        return getCase(x, y).getComponent(0);
+    }
+
+    public static JPanel getCase(int x, int y) {
+        return chessCase[x][y];
     }
 }
 
