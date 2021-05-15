@@ -1,6 +1,8 @@
 package Chess.Pieces;
 
 import Chess.Board;
+import Chess.Main;
+import Chess.TurnIndicator;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -69,6 +71,7 @@ public abstract class Piece extends JButton {
 
                 Board.hasPiece[currentX][currentY] = false;
                 Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
+                Main.frame.getTurnIndicator().currentTurn(); //shows which player's turn it is
                 piece.setPiece(piece, x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
                // Board.isWhiteTurn = !Board.isWhiteTurn;
@@ -99,6 +102,7 @@ public abstract class Piece extends JButton {
 
                 Board.hasPiece[currentX][currentY] = false;
                 Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
+                Main.frame.getTurnIndicator().currentTurn(); //shows which player's turn it is
                 Board.removePiece(x, y);
                 piece.setPiece(piece, x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want

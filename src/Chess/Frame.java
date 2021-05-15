@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Frame extends JFrame {
+    public static TurnIndicator turnIndicator;
     public Frame(int width, int height, String name) {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.getContentPane().setBackground(new Color(0x8c551d));
@@ -21,6 +22,9 @@ public class Frame extends JFrame {
             panel[i].setVisible(true);
         }
 
+        turnIndicator = new TurnIndicator();
+        panel[0].add(turnIndicator);
+
         this.add(panel[0], BorderLayout.NORTH);
         this.add(panel[1], BorderLayout.SOUTH);
         this.add(panel[2], BorderLayout.EAST);
@@ -28,6 +32,10 @@ public class Frame extends JFrame {
 
         this.add(new Set(20, 20), BorderLayout.CENTER);
         this.setVisible(true);
-
     }
+
+    public TurnIndicator getTurnIndicator() {
+        return turnIndicator;
+    }
+
 }

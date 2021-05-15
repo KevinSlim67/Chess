@@ -44,7 +44,6 @@ public class Board extends JPanel {
                 this.add(chessCase[i][j], Integer.valueOf(1));
             }
         }
-
         isWhiteTurn = true;
     }
 
@@ -105,6 +104,7 @@ public class Board extends JPanel {
     public static JPanel getCase(int x, int y) {
         return chessCase[x][y];
     }
+
 }
 
 
