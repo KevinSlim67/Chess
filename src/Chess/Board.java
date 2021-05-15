@@ -1,17 +1,20 @@
 package Chess;
 
+import Chess.Pieces.Piece;
 import Chess.Tiles.BrownTile;
 import Chess.Tiles.WhiteTile;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.awt.event.*;
 
 public class Board extends JPanel {
-    private static JPanel[][] chessCase = new JPanel[8][8];
+    private static final JPanel[][] chessCase = new JPanel[8][8];
     public static boolean[][] hasPiece = new boolean[8][8]; //don't make private
     public static MouseAdapter[][] clickMouseListener = new MouseAdapter[8][8]; //don't make private
+    public static boolean isWhiteTurn;
 
     public Board(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
@@ -38,23 +41,25 @@ public class Board extends JPanel {
                 } else {
                     chessCase[i][j] = new BrownTile();
                 }
-                this.add(chessCase[i][j]);
+                this.add(chessCase[i][j], Integer.valueOf(1));
             }
         }
+
+        isWhiteTurn = true;
     }
 
     //----------------------------------------------------------------------------
 
 
     //clickedCase methods--------------------------------------------------------
-    private static boolean[][] clickedCase = new boolean[8][8];
+    private static final boolean[][] clickedCase = new boolean[8][8];
 
     public static void setClickedCase(int x, int y, boolean value) {
         clickedCase[x][y] = value;
     }
 
     public static boolean getClickedCase(int x, int y) {
-        return clickedCase[x][y];
+        return !clickedCase[x][y]; //dunno why, but compiler gives a warning that it can be inverted
     }
 
     public static void setAllClickedCaseFalse() {
@@ -88,14 +93,21 @@ public class Board extends JPanel {
     }
 
 
-    public static Component getPiece(int x, int y) {
-        return getCase(x, y).getComponent(0);
+    public static Piece getPiece(int x, int y) {
+        Component component = getCase(x, y).getComponent(0);
+        if (component instanceof Piece) { // checks if its really a piece
+            return (Piece) component; // casts to Piece
+        }
+        return null; //if it's not a piece, don't do anything
     }
+
 
     public static JPanel getCase(int x, int y) {
         return chessCase[x][y];
     }
 }
+
+
 
 
 

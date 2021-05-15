@@ -1,7 +1,6 @@
 package Chess;
 
 import Chess.Pieces.BlackPawn;
-import Chess.Pieces.Piece;
 import Chess.Pieces.WhiteKing;
 import Chess.Pieces.WhitePawn;
 
@@ -24,6 +23,7 @@ public class Set extends Board {
             blackPawn[i] = new BlackPawn();
             blackPawn[i].setPiece(blackPawn[i], 1, i);
         }
+
 
 
     }

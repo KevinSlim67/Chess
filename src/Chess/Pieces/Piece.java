@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 public abstract class Piece extends JButton {
     protected int currentX;
     protected int currentY;
+    public char team;
 
     public Piece(String piecePath) {
         this.setLayout(new BorderLayout());
@@ -22,6 +23,7 @@ public abstract class Piece extends JButton {
         this.setIcon(new ImageIcon(new ImageIcon("assets\\pieces\\" + piecePath).
                 getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT)));
     }
+
 
     //highlight methods------------------------------------------------------------------------------
     public void highlight(int x, int y, Piece piece) {
@@ -44,7 +46,8 @@ public abstract class Piece extends JButton {
         Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
         try {
             Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         Board.getCase(x, y).repaint();
     }
     //-----------------------------------------------------------------------------------------------
@@ -65,8 +68,10 @@ public abstract class Piece extends JButton {
                         " from (" + currentX + " , " + currentY + "), to (" + x + " , " + y + ")");
 
                 Board.hasPiece[currentX][currentY] = false;
+                Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
                 piece.setPiece(piece, x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
+               // Board.isWhiteTurn = !Board.isWhiteTurn;
 
             }
         };
@@ -93,6 +98,7 @@ public abstract class Piece extends JButton {
                         currentX + " , " + currentY + ")");
 
                 Board.hasPiece[currentX][currentY] = false;
+                Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
                 Board.removePiece(x, y);
                 piece.setPiece(piece, x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
@@ -111,10 +117,10 @@ public abstract class Piece extends JButton {
     }
 
     public void setPiece(Piece piece, int x, int y) {
-        Board.getCase(x, y).add(piece, 0);
-        Board.hasPiece[x][y] = true;
-        this.setCurrentX(x);
-        this.setCurrentY(y);
+        Board.getCase(x, y).add(piece, 0); //adds piece to case at (x,y)
+        Board.hasPiece[x][y] = true; //registers that case at (x,y) now has a piece
+        piece.setCurrentX(x); //sets piece's current X to the new case's X
+        piece.setCurrentY(y); //sets piece's current Y to the new case's Y
     }
 
     //set X,Y methods--------------------------------------------------------
@@ -127,6 +133,7 @@ public abstract class Piece extends JButton {
     }
 
     //------------------------------------------------------------------------
+
 
 }
 
