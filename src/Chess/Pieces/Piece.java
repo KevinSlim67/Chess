@@ -6,10 +6,12 @@ import Chess.Main;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public abstract class Piece extends JButton {
+public abstract class Piece extends JButton implements ActionListener {
     protected int currentX;
     protected int currentY;
     public char team;
@@ -27,31 +29,41 @@ public abstract class Piece extends JButton {
         actionPerformedActive = true;
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if ((Board.isWhiteTurn && team == 'w') || (!Board.isWhiteTurn && team == 'b')) {
+            if (e.getSource() == this) {
+                if (actionPerformedActive) {
+                    possibleMoves(currentX, currentY);
+                }
+            }
+        }
+    }
+
 
     //highlight methods------------------------------------------------------------------------------
-    public void highlight(int x, int y, Piece piece) {
+    public void highlight(int x, int y) {
         Board.setAllClickedCaseFalse(); //avoids having to click twice on a piece after clicking on another one
         Border border = BorderFactory.createLineBorder(new Color(0x94dccb), 2);
         Board.getCase(x, y).setBorder(border);
         Board.getCase(x, y).repaint();
 
         if (Board.hasPiece[x][y]) {
-            kill(x, y, piece); //kills the piece at (x, y)
+            kill(x, y, this); //kills the piece at (x, y)
 
         } else {
-            movement(x, y, piece); //responsible for moving the piece to the case at (x,y)
+            movement(x, y, this); //responsible for moving the piece to the case at (x,y)
         }
         Board.getCase(x, y).addMouseListener(Board.clickMouseListener[x][y]); //needs to stay
     }
 
     public static void unHighlight(int x, int y) {
-        Board.getCase(x, y).setBorder(null);
-        Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
-        try {
+        if (Board.hasPiece[x][y]) {
+            Board.getCase(x, y).setBorder(null);
+            Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
             Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
-        } catch (Exception e) {
+            Board.getCase(x, y).repaint();
         }
-        Board.getCase(x, y).repaint();
     }
     //-----------------------------------------------------------------------------------------------
 
@@ -75,7 +87,7 @@ public abstract class Piece extends JButton {
                 Main.frame.getTurnIndicator().currentTurn(); //shows which player's turn it is
                 piece.setPiece(x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
-               // Board.isWhiteTurn = !Board.isWhiteTurn;
+                // Board.isWhiteTurn = !Board.isWhiteTurn;
 
             }
         };
@@ -114,11 +126,14 @@ public abstract class Piece extends JButton {
     public void hasCollision(int x, int y) {
     }
 
+    public void possibleMoves(int x, int y) {
+
+    }
+
     public void detectKill(int x, int y, Piece piece) {
     }
 
     public void unDetectKill(int x, int y) {
-
     }
 
     public void setPiece(int x, int y) {

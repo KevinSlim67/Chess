@@ -11,36 +11,6 @@ public class WhitePawn extends Piece implements ActionListener {
         super("white_pawn.png");
         team = 'w';
         this.addActionListener(this);
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (Board.isWhiteTurn) {
-            if (e.getSource() == this) {
-                if (actionPerformedActive) {
-                    Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
-                    if (Board.getClickedCase(currentX, currentY)) {
-                        if (currentX != 6) { //2 possible movements if piece's x = 6, otherwise, only one possible movement
-                            this.highlight(currentX - 1, currentY, this);
-                        } else {
-                            this.highlight(currentX - 1, currentY, this);
-                            this.highlight(currentX - 2, currentY, this);
-                        }
-                        if (currentX > 1) {
-                            for (int i = currentX - 1; i >= currentX - 2; i--) {
-                                hasCollision(i, currentY);
-                            }
-                        }
-                        detectKill(currentX, currentY, this);
-                        Board.setClickedCase(currentX, currentY, true);
-                    } else {
-                        unDetectKill(currentX, currentY);
-                        Board.setClickedCase(currentX, currentY, false);
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -52,17 +22,42 @@ public class WhitePawn extends Piece implements ActionListener {
         }
     }
 
+    @Override
+    public void possibleMoves(int x, int y) {
+        Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
+        if (Board.getClickedCase(x, y)) {
+            if (x != 6) { //2 possible movements if piece's x = 6, otherwise, only one possible movement
+                this.highlight(x - 1, y);
+            } else {
+                this.highlight(x - 1, y);
+                this.highlight(x - 2, y);
+            }
+            if (x > 1) {
+                for (int i = x - 1; i >= x - 2; i--) {
+                    hasCollision(i, y);
+                }
+            }
+            detectKill(x, y, this);
+            Board.setClickedCase(x, y, true);
+        } else {
+            unDetectKill(x, y);
+            Board.setClickedCase(x, y, false);
+        }
+    }
 
     @Override
     public void detectKill(int x, int y, Piece piece) {
         try {
             if (Board.hasPiece[x - 1][y - 1] && Board.getPiece(x - 1, y - 1).team == 'b') {
-                highlight(x - 1, y - 1, this);
+                highlight(x - 1, y - 1);
                 Board.getPiece(x - 1, y - 1).setEnabled(false);
                 Board.getPiece(x - 1, y - 1).addMouseListener(Board.clickMouseListener[x - 1][y - 1]);
             }
+        } catch (Exception e) {
+        }
+        try {
             if (Board.hasPiece[x - 1][y + 1] && Board.getPiece(x - 1, y + 1).team == 'b') {
-                highlight(x - 1, y + 1, this);
+                highlight(x - 1, y + 1);
                 Board.getPiece(x - 1, y + 1).setEnabled(false);
                 Board.getPiece(x - 1, y + 1).addMouseListener(Board.clickMouseListener[x - 1][y + 1]);
             }
@@ -77,6 +72,9 @@ public class WhitePawn extends Piece implements ActionListener {
                 unHighlight(x - 1, y - 1);
                 Board.getPiece(x - 1, y - 1).setEnabled(true);
             }
+        } catch (Exception e) {
+        }
+        try {
             if (Board.hasPiece[x - 1][y + 1] && Board.getPiece(x - 1, y + 1).team == 'b') {
                 unHighlight(x - 1, y + 1);
                 Board.getPiece(x - 1, y + 1).setEnabled(true);

@@ -90,9 +90,9 @@ public class Board extends JPanel {
             getPiece(x, y).removeMouseListener(clickMouseListener[x][y]);
 
             if (getPiece(x, y).team == 'w') {
-                Main.frame.addPanelEast(Board.getPiece(x, y));
-            } else {
                 Main.frame.addPanelWest(Board.getPiece(x, y));
+            } else {
+                Main.frame.addPanelEast(Board.getPiece(x, y));
             }
 
             Board.hasPiece[x][y] = false; //registers that case at (x,y) doesn't have a piece anymore
