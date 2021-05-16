@@ -1,12 +1,12 @@
-package Chess;
+package Chess.Board;
 
+import Chess.Main;
 import Chess.Pieces.Piece;
 import Chess.Tiles.BrownTile;
 import Chess.Tiles.WhiteTile;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -47,8 +47,6 @@ public class Board extends JPanel {
         isWhiteTurn = true;
     }
 
-    //----------------------------------------------------------------------------
-
 
     //clickedCase methods--------------------------------------------------------
     private static final boolean[][] clickedCase = new boolean[8][8];
@@ -86,16 +84,27 @@ public class Board extends JPanel {
     }
 
     public static void removePiece(int x, int y) {
-        getCase(x, y).remove(0);
-        Board.hasPiece[x][y] = false;
-        getCase(x, y).repaint();
+        if (Board.hasPiece[x][y]) {
+            getPiece(x, y).setEnabled(true);
+            getPiece(x, y).actionPerformedActive = false; //make's clicking the button not do anything
+            getPiece(x, y).removeMouseListener(clickMouseListener[x][y]);
+
+            if (getPiece(x, y).team == 'w') {
+                Main.frame.addPanelEast(Board.getPiece(x, y));
+            } else {
+                Main.frame.addPanelWest(Board.getPiece(x, y));
+            }
+
+            Board.hasPiece[x][y] = false; //registers that case at (x,y) doesn't have a piece anymore
+            getCase(x, y).repaint();
+        }
     }
 
 
     public static Piece getPiece(int x, int y) {
         Component component = getCase(x, y).getComponent(0);
-        if (component instanceof Piece) { // checks if its really a piece
-            return (Piece) component; // casts to Piece
+        if (component instanceof Piece) { //checks if its really a piece
+            return (Piece) component; //casts to Piece
         }
         return null; //if it's not a piece, don't do anything
     }
@@ -104,7 +113,6 @@ public class Board extends JPanel {
     public static JPanel getCase(int x, int y) {
         return chessCase[x][y];
     }
-
 }
 
 

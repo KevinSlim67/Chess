@@ -1,6 +1,6 @@
 package Chess.Pieces;
 
-import Chess.Board;
+import Chess.Board.Board;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,31 +16,32 @@ public class BlackPawn extends Piece implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!Board.isWhiteTurn) {
-            if (e.getSource() == this) {
-                Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
-                if (Board.getClickedCase(currentX, currentY)) {
-                    if (currentX != 1) { //2 possible movements if piece's x = 6, otherwise, only one possible movement
-                        this.highlight(currentX + 1, currentY, this);
-                    } else {
-                        this.highlight(currentX + 1, currentY, this);
-                        this.highlight(currentX + 2, currentY, this);
-                    }
-                    if (currentX < 6) {
-                        for (int i = currentX + 1; i <= currentX + 2; i++) {
-                            hasCollision(i, currentY);
+        if (actionPerformedActive) {
+            if (!Board.isWhiteTurn) {
+                if (e.getSource() == this) {
+                    Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
+                    if (Board.getClickedCase(currentX, currentY)) {
+                        if (currentX != 1) { //2 possible movements if piece's x = 6, otherwise, only one possible movement
+                            this.highlight(currentX + 1, currentY, this);
+                        } else {
+                            this.highlight(currentX + 1, currentY, this);
+                            this.highlight(currentX + 2, currentY, this);
                         }
+                        if (currentX < 6) {
+                            for (int i = currentX + 1; i <= currentX + 2; i++) {
+                                hasCollision(i, currentY);
+                            }
+                        }
+                        detectKill(currentX, currentY, this);
+                        Board.setClickedCase(currentX, currentY, true);
+                    } else {
+                        unDetectKill(currentX, currentY);
+                        Board.setClickedCase(currentX, currentY, false);
                     }
-                    detectKill(currentX, currentY, this);
-                    Board.setClickedCase(currentX, currentY, true);
-                } else {
-                    unDetectKill(currentX, currentY);
-                    Board.setClickedCase(currentX, currentY, false);
                 }
             }
         }
     }
-
 
     @Override
     public void hasCollision(int x, int y) {

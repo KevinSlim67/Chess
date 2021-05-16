@@ -1,16 +1,16 @@
-package Chess;
+package Chess.Board;
 
-import Chess.Pieces.BlackPawn;
+import Chess.Board.Board;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
 public class TurnIndicator extends JLabel {
-    Color white = new Color(0xd6d2ce);
-    Color black = new Color(0x1e1d1c);
-    Color gold = new Color(0xcea544);
-    Color yellow = new Color(0xffd163);
+    private Color white = new Color(0xd6d2ce);
+    private Color black = new Color(0x1e1d1c);
+    private Color gold = new Color(0xcea544);
+    private Color yellow = new Color(0xffd163);
     public TurnIndicator() {
         Border border = BorderFactory.createEtchedBorder(7, yellow,gold);
         this.setBorder(border);

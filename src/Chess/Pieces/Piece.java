@@ -1,8 +1,7 @@
 package Chess.Pieces;
 
-import Chess.Board;
+import Chess.Board.Board;
 import Chess.Main;
-import Chess.TurnIndicator;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,6 +13,7 @@ public abstract class Piece extends JButton {
     protected int currentX;
     protected int currentY;
     public char team;
+    public boolean actionPerformedActive;
 
     public Piece(String piecePath) {
         this.setLayout(new BorderLayout());
@@ -23,7 +23,8 @@ public abstract class Piece extends JButton {
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
         this.setIcon(new ImageIcon(new ImageIcon("assets\\pieces\\" + piecePath).
-                getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT)));
+                getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+        actionPerformedActive = true;
     }
 
 
@@ -35,10 +36,10 @@ public abstract class Piece extends JButton {
         Board.getCase(x, y).repaint();
 
         if (Board.hasPiece[x][y]) {
-            kill(x, y, piece); //kills the piece at x, y
+            kill(x, y, piece); //kills the piece at (x, y)
 
         } else {
-            movement(x, y, piece); //responsible for moving the piece to the selected highlighted case
+            movement(x, y, piece); //responsible for moving the piece to the case at (x,y)
         }
         Board.getCase(x, y).addMouseListener(Board.clickMouseListener[x][y]); //needs to stay
     }
@@ -72,7 +73,7 @@ public abstract class Piece extends JButton {
                 Board.hasPiece[currentX][currentY] = false;
                 Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
                 Main.frame.getTurnIndicator().currentTurn(); //shows which player's turn it is
-                piece.setPiece(piece, x, y);
+                piece.setPiece(x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
                // Board.isWhiteTurn = !Board.isWhiteTurn;
 
@@ -104,7 +105,7 @@ public abstract class Piece extends JButton {
                 Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
                 Main.frame.getTurnIndicator().currentTurn(); //shows which player's turn it is
                 Board.removePiece(x, y);
-                piece.setPiece(piece, x, y);
+                piece.setPiece(x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
             }
         };
@@ -120,11 +121,11 @@ public abstract class Piece extends JButton {
 
     }
 
-    public void setPiece(Piece piece, int x, int y) {
-        Board.getCase(x, y).add(piece, 0); //adds piece to case at (x,y)
+    public void setPiece(int x, int y) {
+        Board.getCase(x, y).add(this, 0); //adds piece to case at (x,y)
         Board.hasPiece[x][y] = true; //registers that case at (x,y) now has a piece
-        piece.setCurrentX(x); //sets piece's current X to the new case's X
-        piece.setCurrentY(y); //sets piece's current Y to the new case's Y
+        this.setCurrentX(x); //sets piece's current X to the new case's X
+        this.setCurrentY(y); //sets piece's current Y to the new case's Y
     }
 
     //set X,Y methods--------------------------------------------------------
