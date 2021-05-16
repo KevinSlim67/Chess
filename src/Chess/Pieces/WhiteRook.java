@@ -1,8 +1,6 @@
 package Chess.Pieces;
 
 import Chess.Board.Board;
-
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WhiteRook extends Piece implements ActionListener {
@@ -16,42 +14,9 @@ public class WhiteRook extends Piece implements ActionListener {
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
         if (Board.getClickedCase(x, y)) {
-            //Vertical moves---------------------------------------------------------
-            for (int i = x + 1; i < 8; i++) {
-                if (Board.hasPiece[i][y]) {
-                    detectKill(i, y, this);
-                    break;
-                }
-                highlight(i, y);
-            }
-
-            for (int i = x - 1; i >= 0; i--) {
-                if (Board.hasPiece[i][y]) {
-                    detectKill(i, y, this);
-                    break;
-                }
-                highlight(i, y);
-            }
-            //------------------------------------------------------------------------
-
-            //Horizontal moves--------------------------------------------------------
-            for (int i = y + 1; i < 8; i++) {
-                if (Board.hasPiece[x][i]) {
-                    detectKill(x, i, this);
-                    break;
-                }
-                highlight(x, i);
-            }
-
-            for (int i = y - 1; i >= 0; i--) {
-                if (Board.hasPiece[x][i]) {
-                    detectKill(x, i, this);
-                    break;
-                }
-                highlight(x, i);
-            }
+            rookMoves(x, y);
             //-------------------------------------------------------------------------
-            detectKill(x, y, this);
+            detectKill(x, y);
             Board.setClickedCase(x, y, true);
         } else {
             unDetectKill(x, y);
@@ -60,7 +25,7 @@ public class WhiteRook extends Piece implements ActionListener {
     }
 
     @Override
-    public void detectKill(int x, int y, Piece piece) {
+    public void detectKill(int x, int y) {
 
         if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'b') {
             highlight(x, y);

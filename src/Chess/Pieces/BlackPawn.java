@@ -2,7 +2,6 @@ package Chess.Pieces;
 
 import Chess.Board.Board;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BlackPawn extends Piece implements ActionListener {
@@ -38,7 +37,7 @@ public class BlackPawn extends Piece implements ActionListener {
                     hasCollision(i, y);
                 }
             }
-            detectKill(x, y, this);
+            detectKill(x, y);
             Board.setClickedCase(x, y, true);
         } else {
             unDetectKill(x, y);
@@ -47,7 +46,7 @@ public class BlackPawn extends Piece implements ActionListener {
     }
 
     @Override
-    public void detectKill(int x, int y, Piece piece) {
+    public void detectKill(int x, int y) {
         try {
             if (Board.hasPiece[x + 1][y - 1] && Board.getPiece(x + 1, y - 1).team == 'w') {
                 highlight(x + 1, y - 1);

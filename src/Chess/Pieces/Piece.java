@@ -130,7 +130,7 @@ public abstract class Piece extends JButton implements ActionListener {
 
     }
 
-    public void detectKill(int x, int y, Piece piece) {
+    public void detectKill(int x, int y) {
     }
 
     public void unDetectKill(int x, int y) {
@@ -155,6 +155,100 @@ public abstract class Piece extends JButton implements ActionListener {
     //------------------------------------------------------------------------
 
 
+    public void rookMoves(int x, int y) {
+        //Vertical moves---------------------------------------------------------
+        for (int i = x + 1; i < 8; i++) {
+            if (Board.hasPiece[i][y]) {
+                detectKill(i, y);
+                break;
+            }
+            highlight(i, y);
+        }
+
+        for (int i = x - 1; i >= 0; i--) {
+            if (Board.hasPiece[i][y]) {
+                detectKill(i, y);
+                break;
+            }
+            highlight(i, y);
+        }
+        //------------------------------------------------------------------------
+
+        //Horizontal moves--------------------------------------------------------
+        for (int i = y + 1; i < 8; i++) {
+            if (Board.hasPiece[x][i]) {
+                detectKill(x, i);
+                break;
+            }
+            highlight(x, i);
+        }
+
+        for (int i = y - 1; i >= 0; i--) {
+            if (Board.hasPiece[x][i]) {
+                detectKill(x, i);
+                break;
+            }
+            highlight(x, i);
+        }
+    }
+
+    public void bishopMoves(int x, int y) {
+        //Left diagonal---------------------------------------------------------------
+        int j = y + 1;
+        for (int i = x + 1; i < 8; i++) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                if (Board.hasPiece[i][j]) {
+                    detectKill(i, j);
+                    break;
+                }
+                highlight(i, j);
+                j++;
+            }
+        }
+
+        j = y - 1;
+        for (int i = x - 1; i >= 0; i--) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                if (Board.hasPiece[i][j]) {
+                    detectKill(i, j);
+                    break;
+                }
+                highlight(i, j);
+                j--;
+            }
+        }
+        //-------------------------------------------------------------------------
+
+        //Right diagonal-----------------------------------------------------------
+        j = y - 1;
+        for (int i = x + 1; i < 8; i++) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                if (Board.hasPiece[i][j]) {
+                    detectKill(i, j);
+                    break;
+                }
+                highlight(i, j);
+                j--;
+            }
+        }
+
+        j = y + 1;
+        for (int i = x - 1; i >= 0; i--) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                if (Board.hasPiece[i][j]) {
+                    detectKill(i, j);
+                    break;
+                }
+                highlight(i, j);
+                j++;
+            }
+        }
+        //---------------------------------------------------------------------------
+    }
 }
+
+
+
+
 
 

@@ -4,10 +4,10 @@ import Chess.Board.Board;
 
 import java.awt.event.ActionListener;
 
-public class BlackRook extends Piece implements ActionListener {
-    public BlackRook() {
-        super("black_rook.png");
-        team = 'b';
+public class WhiteBishop extends Piece implements ActionListener {
+    public WhiteBishop() {
+        super("white_bishop.png");
+        team = 'w';
         this.addActionListener(this);
     }
 
@@ -15,7 +15,7 @@ public class BlackRook extends Piece implements ActionListener {
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
         if (Board.getClickedCase(x, y)) {
-            rookMoves(x, y);
+            bishopMoves(x, y);
             detectKill(x, y);
             Board.setClickedCase(x, y, true);
         } else {
@@ -26,7 +26,8 @@ public class BlackRook extends Piece implements ActionListener {
 
     @Override
     public void detectKill(int x, int y) {
-        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
+
+        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'b') {
             highlight(x, y);
             Board.getPiece(x, y).setEnabled(false);
             Board.getPiece(x, y).addMouseListener(Board.clickMouseListener[x][y]);
@@ -35,11 +36,12 @@ public class BlackRook extends Piece implements ActionListener {
 
     @Override
     public void unDetectKill(int x, int y) {
-        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
+
+        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'b') {
             unHighlight(x, y);
             Board.getPiece(x, y).setEnabled(true);
             Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
         }
     }
-
 }
+
