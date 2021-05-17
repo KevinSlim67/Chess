@@ -15,7 +15,6 @@ public class BlackQueen extends Piece {
         if (Board.getClickedCase(x, y)) {
             rookMoves(x, y);
             bishopMoves(x, y);
-            kingMoves(x, y);
             detectKill(x, y);
             Board.setClickedCase(x, y, true);
         } else {
@@ -26,7 +25,6 @@ public class BlackQueen extends Piece {
 
     @Override
     public void detectKill(int x, int y) {
-
         if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
             highlight(x, y);
             Board.getPiece(x, y).setEnabled(false);

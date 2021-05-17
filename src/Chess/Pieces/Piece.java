@@ -67,7 +67,6 @@ public abstract class Piece extends JButton implements ActionListener {
     }
     //-----------------------------------------------------------------------------------------------
 
-
     public void movement(int x, int y, Piece piece) {
         Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
         Board.clickMouseListener[x][y] = new MouseAdapter() {
@@ -153,7 +152,6 @@ public abstract class Piece extends JButton implements ActionListener {
     }
 
     //------------------------------------------------------------------------
-
 
     public void rookMoves(int x, int y) {
         //Vertical moves---------------------------------------------------------

@@ -15,7 +15,6 @@ public class WhiteQueen extends Piece {
         if (Board.getClickedCase(x, y)) {
             rookMoves(x, y);
             bishopMoves(x, y);
-            kingMoves(x, y);
             detectKill(x, y);
             Board.setClickedCase(x, y, true);
         } else {

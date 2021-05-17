@@ -2,16 +2,12 @@ package Chess.Pieces;
 
 import Chess.Board.Board;
 
-import java.awt.event.ActionListener;
-
 public class BlackKnight extends Piece {
     public BlackKnight() {
         super("black_knight.png");
         team = 'b';
         this.addActionListener(this);
     }
-
-
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
         if (Board.getClickedCase(x, y)) {
@@ -26,7 +22,6 @@ public class BlackKnight extends Piece {
 
     @Override
     public void detectKill(int x, int y) {
-
         if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
             highlight(x, y);
             Board.getPiece(x, y).setEnabled(false);
@@ -36,7 +31,6 @@ public class BlackKnight extends Piece {
 
     @Override
     public void unDetectKill(int x, int y) {
-
         if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
             unHighlight(x, y);
             Board.getPiece(x, y).setEnabled(true);

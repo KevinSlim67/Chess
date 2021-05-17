@@ -1,7 +1,6 @@
 package Chess.Pieces;
 
 import Chess.Board.Board;
-
 import java.awt.event.ActionListener;
 
 public class BlackPawn extends Piece implements ActionListener {
@@ -10,7 +9,6 @@ public class BlackPawn extends Piece implements ActionListener {
         super("black_pawn.png");
         team = 'b';
         this.addActionListener(this);
-
     }
 
     @Override
