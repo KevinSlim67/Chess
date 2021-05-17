@@ -200,9 +200,10 @@ public abstract class Piece extends JButton implements ActionListener {
                 if (Board.hasPiece[i][j]) {
                     detectKill(i, j);
                     break;
+                } else {
+                    highlight(i, j);
+                    j++;
                 }
-                highlight(i, j);
-                j++;
             }
         }
 
@@ -212,9 +213,10 @@ public abstract class Piece extends JButton implements ActionListener {
                 if (Board.hasPiece[i][j]) {
                     detectKill(i, j);
                     break;
+                } else {
+                    highlight(i, j);
+                    j--;
                 }
-                highlight(i, j);
-                j--;
             }
         }
         //-------------------------------------------------------------------------
@@ -226,9 +228,10 @@ public abstract class Piece extends JButton implements ActionListener {
                 if (Board.hasPiece[i][j]) {
                     detectKill(i, j);
                     break;
+                } else {
+                    highlight(i, j);
+                    j--;
                 }
-                highlight(i, j);
-                j--;
             }
         }
 
@@ -238,14 +241,43 @@ public abstract class Piece extends JButton implements ActionListener {
                 if (Board.hasPiece[i][j]) {
                     detectKill(i, j);
                     break;
+                } else {
+                    highlight(i, j);
+                    j++;
                 }
-                highlight(i, j);
-                j++;
             }
         }
         //---------------------------------------------------------------------------
     }
+
+    public void knightMoves(int x, int y) {
+        int[] xMoves = {x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1};
+        int[] yMoves = {y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2};
+        for (int i = 0; i < xMoves.length; i++)
+            if ((xMoves[i] >= 0 && xMoves[i] < 8) && (yMoves[i] >= 0 && yMoves[i] < 8)) {
+                if (Board.hasPiece[xMoves[i]][yMoves[i]])
+                    detectKill(xMoves[i], yMoves[i]);
+                else {
+                    highlight(xMoves[i], yMoves[i]);
+                }
+            }
+    }
+
+    public void kingMoves(int x, int y) {
+        int[] xMoves  = {x+1, x+1, x+1, x-1, x-1, x-1, x, x};
+        int[] yMoves = {y-1, y, y+1, y-1, y, y+1, y-1, y+1};
+        for (int i = 0; i < xMoves.length; i++)
+            if ((xMoves[i] >= 0 && xMoves[i] < 8) && (yMoves[i] >= 0 && yMoves[i] < 8)) {
+                if (Board.hasPiece[xMoves[i]][yMoves[i]])
+                    detectKill(xMoves[i], yMoves[i]);
+                else {
+                    highlight(xMoves[i], yMoves[i]);
+                }
+            }
+    }
 }
+
+
 
 
 

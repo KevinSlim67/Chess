@@ -2,9 +2,9 @@ package Chess.Pieces;
 
 import Chess.Board.Board;
 
-public class WhiteKing extends Piece {
-    public WhiteKing() {
-        super("white_king.png");
+public class WhiteQueen extends Piece {
+    public WhiteQueen() {
+        super("white_queen.png");
         team = 'w';
         this.addActionListener(this);
     }
@@ -13,6 +13,8 @@ public class WhiteKing extends Piece {
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
         if (Board.getClickedCase(x, y)) {
+            rookMoves(x, y);
+            bishopMoves(x, y);
             kingMoves(x, y);
             detectKill(x, y);
             Board.setClickedCase(x, y, true);

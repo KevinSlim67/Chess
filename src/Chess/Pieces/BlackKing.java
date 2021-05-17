@@ -2,10 +2,10 @@ package Chess.Pieces;
 
 import Chess.Board.Board;
 
-public class WhiteKing extends Piece {
-    public WhiteKing() {
-        super("white_king.png");
-        team = 'w';
+public class BlackKing extends Piece {
+    public BlackKing() {
+        super("black_king.png");
+        team = 'b';
         this.addActionListener(this);
     }
 
@@ -25,7 +25,7 @@ public class WhiteKing extends Piece {
     @Override
     public void detectKill(int x, int y) {
 
-        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'b') {
+        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
             highlight(x, y);
             Board.getPiece(x, y).setEnabled(false);
             Board.getPiece(x, y).addMouseListener(Board.clickMouseListener[x][y]);
@@ -35,7 +35,7 @@ public class WhiteKing extends Piece {
     @Override
     public void unDetectKill(int x, int y) {
 
-        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'b') {
+        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
             unHighlight(x, y);
             Board.getPiece(x, y).setEnabled(true);
             Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);

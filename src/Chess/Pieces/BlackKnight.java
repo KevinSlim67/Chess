@@ -2,10 +2,12 @@ package Chess.Pieces;
 
 import Chess.Board.Board;
 
-public class WhiteKing extends Piece {
-    public WhiteKing() {
-        super("white_king.png");
-        team = 'w';
+import java.awt.event.ActionListener;
+
+public class BlackKnight extends Piece {
+    public BlackKnight() {
+        super("black_knight.png");
+        team = 'b';
         this.addActionListener(this);
     }
 
@@ -13,7 +15,7 @@ public class WhiteKing extends Piece {
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
         if (Board.getClickedCase(x, y)) {
-            kingMoves(x, y);
+            knightMoves(x, y);
             detectKill(x, y);
             Board.setClickedCase(x, y, true);
         } else {
@@ -25,7 +27,7 @@ public class WhiteKing extends Piece {
     @Override
     public void detectKill(int x, int y) {
 
-        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'b') {
+        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
             highlight(x, y);
             Board.getPiece(x, y).setEnabled(false);
             Board.getPiece(x, y).addMouseListener(Board.clickMouseListener[x][y]);
@@ -35,7 +37,7 @@ public class WhiteKing extends Piece {
     @Override
     public void unDetectKill(int x, int y) {
 
-        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'b') {
+        if (Board.hasPiece[x][y] && Board.getPiece(x, y).team == 'w') {
             unHighlight(x, y);
             Board.getPiece(x, y).setEnabled(true);
             Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);

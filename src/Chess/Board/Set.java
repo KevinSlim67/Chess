@@ -8,8 +8,17 @@ public class Set extends Board {
     public Set(int width, int height) {
         super(width, height);
 
-       // WhiteKing whiteKing = new WhiteKing();
-       // whiteKing.setPiece(4, 4);
+        //kings
+       WhiteKing whiteKing = new WhiteKing();
+       whiteKing.setPiece(7, 3);
+       BlackKing blackKing = new BlackKing();
+       blackKing.setPiece(0,3);
+
+       //queens
+        WhiteQueen whiteQueen = new WhiteQueen();
+        whiteQueen.setPiece(7,4);
+        BlackQueen blackQueen = new BlackQueen();
+        blackQueen.setPiece(0,4);
 
         //pawns
         WhitePawn[] whitePawn = new WhitePawn[8];
@@ -36,15 +45,27 @@ public class Set extends Board {
         blackRook2.setPiece(0,7);
 
         //bishops
-        WhiteBishop bishop1 = new WhiteBishop();
-        bishop1.setPiece(7,2);
-        WhiteBishop bishop2 = new WhiteBishop();
-        bishop2.setPiece(7,5);
+        WhiteBishop whiteBishop1 = new WhiteBishop();
+        whiteBishop1.setPiece(7,2);
+        WhiteBishop whiteBishop2 = new WhiteBishop();
+        whiteBishop2.setPiece(7,5);
 
         BlackBishop blackBishop1 = new BlackBishop();
         blackBishop1.setPiece(0,2);
         BlackBishop blackBishop2 = new BlackBishop();
         blackBishop2.setPiece(0,5);
+
+        //knights
+        WhiteKnight whiteKnight1 = new WhiteKnight();
+        whiteKnight1.setPiece(7,1);
+        WhiteKnight whiteKnight2 = new WhiteKnight();
+        whiteKnight2.setPiece(7,6);
+
+        BlackKnight blackKnight1 = new BlackKnight();
+        blackKnight1.setPiece(0,1);
+        BlackKnight blackKnight2 = new BlackKnight();
+        blackKnight2.setPiece(0,6);
+
 
 
 
