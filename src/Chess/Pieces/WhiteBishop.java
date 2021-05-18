@@ -2,15 +2,12 @@ package Chess.Pieces;
 
 import Chess.Board.Board;
 
-import java.awt.event.ActionListener;
-
-public class WhiteBishop extends Piece implements ActionListener {
+public class WhiteBishop extends Piece {
     public WhiteBishop() {
         super("white_bishop.png");
         team = 'w';
         this.addActionListener(this);
     }
-
 
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one

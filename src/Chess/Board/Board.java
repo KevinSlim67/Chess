@@ -47,7 +47,6 @@ public class Board extends JPanel {
         isWhiteTurn = true;
     }
 
-
     //clickedCase methods--------------------------------------------------------
     private static final boolean[][] clickedCase = new boolean[8][8];
 
@@ -108,7 +107,6 @@ public class Board extends JPanel {
         }
         return null; //if it's not a piece, don't do anything
     }
-
 
     public static JPanel getCase(int x, int y) {
         return chessCase[x][y];

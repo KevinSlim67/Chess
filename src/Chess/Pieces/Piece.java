@@ -40,7 +40,6 @@ public abstract class Piece extends JButton implements ActionListener {
         }
     }
 
-
     //highlight methods------------------------------------------------------------------------------
     public void highlight(int x, int y) {
         Board.setAllClickedCaseFalse(); //avoids having to click twice on a piece after clicking on another one
@@ -150,7 +149,6 @@ public abstract class Piece extends JButton implements ActionListener {
     public void setCurrentY(int y) {
         currentY = y;
     }
-
     //------------------------------------------------------------------------
 
     public void rookMoves(int x, int y) {

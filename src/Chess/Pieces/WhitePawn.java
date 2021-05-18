@@ -2,9 +2,7 @@ package Chess.Pieces;
 
 import Chess.Board.Board;
 
-import java.awt.event.ActionListener;
-
-public class WhitePawn extends Piece implements ActionListener {
+public class WhitePawn extends Piece {
 
     public WhitePawn() {
         super("white_pawn.png");

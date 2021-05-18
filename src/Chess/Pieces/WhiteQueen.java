@@ -9,7 +9,6 @@ public class WhiteQueen extends Piece {
         this.addActionListener(this);
     }
 
-
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
         if (Board.getClickedCase(x, y)) {

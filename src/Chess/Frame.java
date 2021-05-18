@@ -14,7 +14,7 @@ public class Frame extends JFrame {
     JPanel mainPanel;
     public Frame(int width, int height, String name) {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //this.getContentPane().setBackground(new Color(0x8c551d));
+        this.getContentPane().setBackground(new Color(0x341c00));
         this.setResizable(false);
         this.setLayout(new BorderLayout());
         this.setSize(width, height);
