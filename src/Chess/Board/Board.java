@@ -15,6 +15,7 @@ public class Board extends JPanel {
     public static boolean[][] hasPiece = new boolean[8][8]; //don't make private
     public static MouseAdapter[][] clickMouseListener = new MouseAdapter[8][8]; //don't make private
     public static boolean isWhiteTurn;
+    public static boolean[][] hasMove = new boolean[8][8];
 
     public Board(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
@@ -29,7 +30,6 @@ public class Board extends JPanel {
                 chessCase[i][j] = new JPanel();
                 chessCase[i][j].setBorder(border);
                 chessCase[i][j].setOpaque(false);
-
             }
         }
 
@@ -75,9 +75,18 @@ public class Board extends JPanel {
                     getPiece(i, j).removeMouseListener(Board.clickMouseListener[i][j]);
                 } catch (Exception e) {
                 }
+                hasMove[i][j] = false;
                 getCase(i, j).setBorder(null);
                 getCase(i, j).removeMouseListener(Board.clickMouseListener[i][j]);
                 getCase(i, j).repaint();
+            }
+        }
+    }
+
+    public static void unDetectMoveAll() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Board.hasMove[i][j] = false;
             }
         }
     }
@@ -88,6 +97,7 @@ public class Board extends JPanel {
             getPiece(x, y).actionPerformedActive = false; //make's clicking the button not do anything
             getPiece(x, y).removeMouseListener(clickMouseListener[x][y]);
 
+            //puts the piece in the west or east panel depending on what team it's on
             if (getPiece(x, y).team == 'w') {
                 Main.frame.addPanelWest(Board.getPiece(x, y));
             } else {

@@ -1,6 +1,6 @@
 package Chess.Board;
 
-import Chess.Board.Board;
+import Chess.Main;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -26,6 +26,7 @@ public class TurnIndicator extends JLabel {
         this.setText("White Team is playing");
     }
 
+    public int numberOfTurns;
     public void currentTurn() {
         if (Board.isWhiteTurn) {
             this.setBackground(white);
@@ -36,6 +37,18 @@ public class TurnIndicator extends JLabel {
             this.setForeground(white);
             this.setText("Black Team is playing");
         }
+
+        numberOfTurns++;
         this.repaint();
+
+       /* if (numberOfTurns == 2) {
+            Main.frame.mainPanel.removeAll();
+            JLabel label = new JLabel();
+            label.setText("This is a draw !");
+            label.setVisible(true);
+            label.setOpaque(true);
+            Main.frame.mainPanel.add(label);
+        }*/ //temporary draw mechanic
     }
+
 }

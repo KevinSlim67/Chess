@@ -10,5 +10,6 @@ public class Main {
         final int height = 720;
         frame = new Frame(width, height, "Chess");
         frame.setLayout(new BorderLayout(0, 0));
+        frame.setBoard.blackKing.initialize();
     }
 }

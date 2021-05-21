@@ -5,70 +5,72 @@ import Chess.Pieces.*;
 
 public class Set extends Board {
 
+    public WhitePawn[] whitePawn = new WhitePawn[8];
+    public BlackPawn[] blackPawn = new BlackPawn[8];
+
+    public WhiteRook whiteRook1 = new WhiteRook();
+    public WhiteRook whiteRook2 = new WhiteRook();
+    public BlackRook blackRook1 = new BlackRook();
+    public BlackRook blackRook2 = new BlackRook();
+
+    public WhiteBishop whiteBishop1 = new WhiteBishop();
+    public WhiteBishop whiteBishop2 = new WhiteBishop();
+    public BlackBishop blackBishop1 = new BlackBishop();
+    public BlackBishop blackBishop2 = new BlackBishop();
+
+    public WhiteKnight whiteKnight1 = new WhiteKnight();
+    public WhiteKnight whiteKnight2 = new WhiteKnight();
+    public BlackKnight blackKnight1 = new BlackKnight();
+    public BlackKnight blackKnight2 = new BlackKnight();
+
+    public WhiteQueen whiteQueen = new WhiteQueen();
+    public BlackQueen blackQueen = new BlackQueen();
+
+    public WhiteKing whiteKing = new WhiteKing();
+    public BlackKing blackKing = new BlackKing();
+
     public Set(int width, int height) {
         super(width, height);
 
-        //kings
-       WhiteKing whiteKing = new WhiteKing();
-       whiteKing.setPiece(7, 3);
-       BlackKing blackKing = new BlackKing();
-       blackKing.setPiece(0,3);
-
-       //queens
-        WhiteQueen whiteQueen = new WhiteQueen();
-        whiteQueen.setPiece(7,4);
-        BlackQueen blackQueen = new BlackQueen();
-        blackQueen.setPiece(0,4);
+        //queens
+        whiteQueen.setPiece(7, 4);
+        blackQueen.setPiece(0, 4);
 
         //pawns
-        WhitePawn[] whitePawn = new WhitePawn[8];
         for (int i = 0; i < 8; i++) {
             whitePawn[i] = new WhitePawn();
             whitePawn[i].setPiece(6, i);
         }
 
-        BlackPawn[] blackPawn = new BlackPawn[8];
         for (int i = 0; i < 8; i++) {
             blackPawn[i] = new BlackPawn();
             blackPawn[i].setPiece(1, i);
         }
 
         //rooks
-        WhiteRook whiteRook1 = new WhiteRook();
-        whiteRook1.setPiece(7,0);
-        WhiteRook whiteRook2 = new WhiteRook();
-        whiteRook2.setPiece(7,7);
+        whiteRook1.setPiece(7, 0);
+        whiteRook2.setPiece(7, 7);
 
-        BlackRook blackRook1 = new BlackRook();
-        blackRook1.setPiece(0,0);
-        BlackRook blackRook2 = new BlackRook();
-        blackRook2.setPiece(0,7);
+        blackRook1.setPiece(0, 0);
+        blackRook2.setPiece(0, 7);
 
         //bishops
-        WhiteBishop whiteBishop1 = new WhiteBishop();
-        whiteBishop1.setPiece(7,2);
-        WhiteBishop whiteBishop2 = new WhiteBishop();
-        whiteBishop2.setPiece(7,5);
+        whiteBishop1.setPiece(7, 2);
+        whiteBishop2.setPiece(7, 5);
 
-        BlackBishop blackBishop1 = new BlackBishop();
-        blackBishop1.setPiece(0,2);
-        BlackBishop blackBishop2 = new BlackBishop();
-        blackBishop2.setPiece(0,5);
+        blackBishop1.setPiece(0, 2);
+        blackBishop2.setPiece(0, 5);
 
         //knights
-        WhiteKnight whiteKnight1 = new WhiteKnight();
-        whiteKnight1.setPiece(7,1);
-        WhiteKnight whiteKnight2 = new WhiteKnight();
-        whiteKnight2.setPiece(7,6);
+        whiteKnight1.setPiece(7, 1);
+        whiteKnight2.setPiece(7, 6);
 
-        BlackKnight blackKnight1 = new BlackKnight();
-        blackKnight1.setPiece(0,1);
-        BlackKnight blackKnight2 = new BlackKnight();
-        blackKnight2.setPiece(0,6);
+        blackKnight1.setPiece(0, 1);
+        blackKnight2.setPiece(0, 6);
 
-
-
-
+        //kings
+        whiteKing.setPiece(7, 3);
+        blackKing.setPiece(0, 3);
 
     }
 }

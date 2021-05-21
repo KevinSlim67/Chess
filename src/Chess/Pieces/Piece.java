@@ -57,12 +57,11 @@ public abstract class Piece extends JButton implements ActionListener {
     }
 
     public static void unHighlight(int x, int y) {
-        if (Board.hasPiece[x][y]) {
-            Board.getCase(x, y).setBorder(null);
-            Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
+        if (Board.hasPiece[x][y])
             Board.getPiece(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
-            Board.getCase(x, y).repaint();
-        }
+        Board.getCase(x, y).removeMouseListener(Board.clickMouseListener[x][y]);
+        Board.getCase(x, y).setBorder(null);
+        Board.getCase(x, y).repaint();
     }
     //-----------------------------------------------------------------------------------------------
 
@@ -82,11 +81,13 @@ public abstract class Piece extends JButton implements ActionListener {
 
                 Board.hasPiece[currentX][currentY] = false;
                 Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
-                Main.frame.getTurnIndicator().currentTurn(); //shows which player's turn it is
+                if (!Board.isWhiteTurn) {
+
+                }
+                Main.frame.getTurnIndicator().currentTurn(); //updates visually which player's turn it is
                 piece.setPiece(x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
                 // Board.isWhiteTurn = !Board.isWhiteTurn;
-
             }
         };
     }
@@ -102,6 +103,7 @@ public abstract class Piece extends JButton implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                Main.frame.getTurnIndicator().numberOfTurns = 0; //resets the number when a kill happens to avoid draw
                 //prevents having to click twice a case you clicked on once, then that you switched highlights from
                 //also solves the bug of having to click twice after moving a piece
                 Board.setAllClickedCaseFalse();
@@ -113,7 +115,7 @@ public abstract class Piece extends JButton implements ActionListener {
 
                 Board.hasPiece[currentX][currentY] = false;
                 Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
-                Main.frame.getTurnIndicator().currentTurn(); //shows which player's turn it is
+                Main.frame.getTurnIndicator().currentTurn(); //updates visually which player's turn it is
                 Board.removePiece(x, y);
                 piece.setPiece(x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
@@ -121,11 +123,11 @@ public abstract class Piece extends JButton implements ActionListener {
         };
     }
 
+    //gameplay elements overwritten by children classes methods------------------------------------------
     public void hasCollision(int x, int y) {
     }
 
     public void possibleMoves(int x, int y) {
-
     }
 
     public void detectKill(int x, int y) {
@@ -133,6 +135,7 @@ public abstract class Piece extends JButton implements ActionListener {
 
     public void unDetectKill(int x, int y) {
     }
+    //---------------------------------------------------------------------------------
 
     public void setPiece(int x, int y) {
         Board.getCase(x, y).add(this, 0); //adds piece to case at (x,y)
@@ -141,7 +144,7 @@ public abstract class Piece extends JButton implements ActionListener {
         this.setCurrentY(y); //sets piece's current Y to the new case's Y
     }
 
-    //set X,Y methods--------------------------------------------------------
+    //set X,Y methods------------------------------------------------------------------
     public void setCurrentX(int x) {
         currentX = x;
     }
@@ -149,9 +152,18 @@ public abstract class Piece extends JButton implements ActionListener {
     public void setCurrentY(int y) {
         currentY = y;
     }
-    //------------------------------------------------------------------------
+
+    public int getCurrentX() {
+        return currentX;
+    }
+
+    public int getCurrentY() {
+        return currentY;
+    }
+    //---------------------------------------------------------------------------------
 
     public void rookMoves(int x, int y) {
+        //highlights the moves that are vertical and horizontal to the piece
         //Vertical moves---------------------------------------------------------
         for (int i = x + 1; i < 8; i++) {
             if (Board.hasPiece[i][y]) {
@@ -189,6 +201,7 @@ public abstract class Piece extends JButton implements ActionListener {
     }
 
     public void bishopMoves(int x, int y) {
+        //highlights the moves that are diagonal to the piece
         //Left diagonal---------------------------------------------------------------
         int j = y + 1;
         for (int i = x + 1; i < 8; i++) {
@@ -247,6 +260,7 @@ public abstract class Piece extends JButton implements ActionListener {
     }
 
     public void knightMoves(int x, int y) {
+        //highlights the moves that are 2 cases in other direction, and one case in the other of that piece
         int[] xMoves = {x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1};
         int[] yMoves = {y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2};
         for (int i = 0; i < xMoves.length; i++)
@@ -260,8 +274,9 @@ public abstract class Piece extends JButton implements ActionListener {
     }
 
     public void kingMoves(int x, int y) {
-        int[] xMoves  = {x+1, x+1, x+1, x-1, x-1, x-1, x, x};
-        int[] yMoves = {y-1, y, y+1, y-1, y, y+1, y-1, y+1};
+        //highlights the cases all around the piece
+        int[] xMoves = {x + 1, x + 1, x + 1, x - 1, x - 1, x - 1, x, x};
+        int[] yMoves = {y - 1, y, y + 1, y - 1, y, y + 1, y - 1, y + 1};
         for (int i = 0; i < xMoves.length; i++)
             if ((xMoves[i] >= 0 && xMoves[i] < 8) && (yMoves[i] >= 0 && yMoves[i] < 8)) {
                 if (Board.hasPiece[xMoves[i]][yMoves[i]])
@@ -270,6 +285,130 @@ public abstract class Piece extends JButton implements ActionListener {
                     highlight(xMoves[i], yMoves[i]);
                 }
             }
+    }
+
+    public void possibleRookMoves(int x, int y) {
+        //Vertical moves---------------------------------------------------------
+        for (int i = x + 1; i < 8; i++) {
+            Board.hasMove[i][y] = true;
+            if (Board.hasPiece[i][y]) {
+                break;
+            }
+        }
+
+        for (int i = x - 1; i >= 0; i--) {
+            Board.hasMove[i][y] = true;
+            if (Board.hasPiece[i][y]) {
+                break;
+            }
+        }
+        //------------------------------------------------------------------------
+
+        //Horizontal moves--------------------------------------------------------
+        for (int i = y + 1; i < 8; i++) {
+            Board.hasMove[x][i] = true;
+            if (Board.hasPiece[x][i]) {
+                break;
+            }
+        }
+
+        for (int i = y - 1; i >= 0; i--) {
+            Board.hasMove[x][i] = true;
+            if (Board.hasPiece[x][i]) {
+                break;
+            }
+        }
+        //------------------------------------------------------------------------
+    }
+
+    public void possibleBishopMoves(int x, int y) {
+        //Left diagonal---------------------------------------------------------------
+        int j = y + 1;
+        for (int i = x + 1; i < 8; i++) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                Board.hasMove[i][j] = true;
+                if (Board.hasPiece[i][j]) {
+                    break;
+                } else {
+                    j++;
+                }
+            }
+        }
+
+        j = y - 1;
+        for (int i = x - 1; i >= 0; i--) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                Board.hasMove[i][j] = true;
+                if (Board.hasPiece[i][j]) {
+                    break;
+                } else {
+                    j--;
+                }
+            }
+        }
+        //-------------------------------------------------------------------------
+
+        //Right diagonal-----------------------------------------------------------
+        j = y - 1;
+        for (int i = x + 1; i < 8; i++) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                Board.hasMove[i][j] = true;
+                if (Board.hasPiece[i][j]) {
+                    break;
+                } else {
+                    j--;
+                }
+            }
+        }
+
+        j = y + 1;
+        for (int i = x - 1; i >= 0; i--) {
+            if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
+                Board.hasMove[i][j] = true;
+                if (Board.hasPiece[i][j]) {
+                    break;
+                } else {
+                    j++;
+                }
+            }
+        }
+        //---------------------------------------------------------------------------
+    }
+
+    public void possibleKnightMoves(int x, int y) {
+        //highlights the moves that are 2 cases in other direction, and one case in the other of that piece
+        int[] xMoves = {x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1};
+        int[] yMoves = {y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2};
+        for (int i = 0; i < xMoves.length; i++)
+            if ((xMoves[i] >= 0 && xMoves[i] < 8) && (yMoves[i] >= 0 && yMoves[i] < 8)) {
+                Board.hasMove[xMoves[i]][yMoves[i]] = true;
+            }
+    }
+
+    public void possibleKingMoves(int x, int y) {
+        //highlights the cases all around the piece
+        int[] xMoves = {x + 1, x + 1, x + 1, x - 1, x - 1, x - 1, x, x};
+        int[] yMoves = {y - 1, y, y + 1, y - 1, y, y + 1, y - 1, y + 1};
+        for (int i = 0; i < xMoves.length; i++)
+            if ((xMoves[i] >= 0 && xMoves[i] < 8) && (yMoves[i] >= 0 && yMoves[i] < 8)) {
+                Board.hasMove[xMoves[i]][yMoves[i]] = true;
+            }
+    }
+
+    public void possibleQueenMoves(int x, int y) {
+        possibleRookMoves(x, y);
+        possibleBishopMoves(x, y);
+    }
+
+    public void possibleWhitePawnMoves(int x, int y) {
+        try {
+            Board.hasMove[x - 1][y - 1] = true;
+        } catch (Exception e) {
+        }
+        try {
+            Board.hasMove[x - 1][y + 1] = true;
+        } catch (Exception e) {
+        }
     }
 }
 

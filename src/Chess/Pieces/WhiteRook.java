@@ -7,13 +7,13 @@ public class WhiteRook extends Piece {
         super("white_rook.png");
         team = 'w';
         this.addActionListener(this);
+        possibleRookMoves(currentX, currentY);
     }
 
     public void possibleMoves(int x, int y) {
         Board.unHighlightAll(); //unhighlights old piece's movement when clicking on a new one
         if (Board.getClickedCase(x, y)) {
             rookMoves(x, y);
-            //-------------------------------------------------------------------------
             detectKill(x, y);
             Board.setClickedCase(x, y, true);
         } else {

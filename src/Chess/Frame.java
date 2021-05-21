@@ -3,15 +3,18 @@ package Chess;
 import Chess.Board.BoardBackground;
 import Chess.Board.Set;
 import Chess.Board.TurnIndicator;
+import Chess.Pieces.BlackKing;
 import Chess.Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Frame extends JFrame {
+    public JPanel mainPanel = new BoardBackground();
     JPanel[] panel = new JPanel[4];
+    public Set setBoard = new Set(20, 20);
+
     public static TurnIndicator turnIndicator;
-    JPanel mainPanel;
     public Frame(int width, int height, String name) {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.getContentPane().setBackground(new Color(0x341c00));
@@ -20,8 +23,6 @@ public class Frame extends JFrame {
         this.setSize(width, height);
         this.setTitle(name);
         this.setVisible(true);
-
-        mainPanel = new BoardBackground();
         mainPanel.setLayout(new BorderLayout());
 
         for (int i = 0; i < 4; i++) {
@@ -42,7 +43,7 @@ public class Frame extends JFrame {
         mainPanel.add(panel[2], BorderLayout.EAST);
         mainPanel.add(panel[3], BorderLayout.WEST);
 
-        mainPanel.add(new Set(20, 20), BorderLayout.CENTER);
+        mainPanel.add(setBoard, BorderLayout.CENTER);
         mainPanel.setVisible(true);
 
         this.add(mainPanel);
