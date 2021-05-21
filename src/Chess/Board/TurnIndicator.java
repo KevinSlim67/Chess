@@ -1,7 +1,5 @@
 package Chess.Board;
 
-import Chess.Main;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -27,6 +25,8 @@ public class TurnIndicator extends JLabel {
     }
 
     public int numberOfTurns;
+    private int[][] hasHighlight = new int[8][8];
+
     public void currentTurn() {
         if (Board.isWhiteTurn) {
             this.setBackground(white);
@@ -50,5 +50,4 @@ public class TurnIndicator extends JLabel {
             Main.frame.mainPanel.add(label);
         }*/ //temporary draw mechanic
     }
-
 }

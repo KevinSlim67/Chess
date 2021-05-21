@@ -11,5 +11,6 @@ public class Main {
         frame = new Frame(width, height, "Chess");
         frame.setLayout(new BorderLayout(0, 0));
         frame.setBoard.blackKing.initialize();
+        frame.setBoard.whiteKing.initialize();
     }
 }

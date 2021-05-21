@@ -30,6 +30,7 @@ public class Board extends JPanel {
                 chessCase[i][j] = new JPanel();
                 chessCase[i][j].setBorder(border);
                 chessCase[i][j].setOpaque(false);
+
             }
         }
 
@@ -120,6 +121,10 @@ public class Board extends JPanel {
 
     public static JPanel getCase(int x, int y) {
         return chessCase[x][y];
+    }
+
+    public static void addPanel(int x, int y, JPanel panel) {
+        chessCase[x][y] = panel;
     }
 }
 
