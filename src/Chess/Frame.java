@@ -4,9 +4,11 @@ import Chess.Board.BoardBackground;
 import Chess.Board.Set;
 import Chess.Board.TurnIndicator;
 import Chess.Pieces.BlackKing;
+import Chess.Pieces.BlackPawn;
 import Chess.Pieces.Piece;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class Frame extends JFrame {
@@ -16,15 +18,16 @@ public class Frame extends JFrame {
 
     public static TurnIndicator turnIndicator;
     public Frame(int width, int height, String name) {
+
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.getContentPane().setBackground(new Color(0x341c00));
         this.setResizable(false);
         this.setLayout(new BorderLayout());
         this.setSize(width, height);
+        this.setIconImage(new ImageIcon("assets\\chess_icon2.png").getImage());
         this.setTitle(name);
         this.setVisible(true);
         mainPanel.setLayout(new BorderLayout());
-
         for (int i = 0; i < 4; i++) {
             panel[i] = new JPanel();
             panel[i].setOpaque(false);
@@ -43,9 +46,11 @@ public class Frame extends JFrame {
         mainPanel.add(panel[2], BorderLayout.EAST);
         mainPanel.add(panel[3], BorderLayout.WEST);
 
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        setBoard.setBorder(border);
         mainPanel.add(setBoard, BorderLayout.CENTER);
-        mainPanel.setVisible(true);
 
+        mainPanel.setVisible(true);
         this.add(mainPanel);
         this.setVisible(true);
     }

@@ -22,6 +22,7 @@ public class Board extends JPanel {
         this.setLayout(new GridLayout(8, 8, 0, 0));
         Border border = BorderFactory.createLineBorder(Color.BLACK);
         this.setBorder(border);
+        this.setBackground(new Color(0x321301));
         this.setVisible(true);
 
         //generates all 64 cases, each one them as panel to store things
