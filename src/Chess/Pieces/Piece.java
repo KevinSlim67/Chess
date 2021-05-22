@@ -81,13 +81,13 @@ public abstract class Piece extends JButton implements ActionListener {
 
                 Board.hasPiece[currentX][currentY] = false;
                 Board.isWhiteTurn = !Board.isWhiteTurn; //changes player turns
-                if (!Board.isWhiteTurn) {
+                //makes sure the blackKing isn't registered as in danger after you move any piece
+                Main.frame.setBoard.blackKing.inDanger = false;
 
-                }
-                Main.frame.getTurnIndicator().currentTurn(); //updates visually which player's turn it is
                 piece.setPiece(x, y);
                 Board.unHighlightAll(); //gets rid of extra highlights once you've picked the one you want
-                // Board.isWhiteTurn = !Board.isWhiteTurn;
+                Main.frame.getTurnIndicator().currentTurn(); //updates visually which player's turn it is
+                Board.unDetectAllMoves();
             }
         };
     }
@@ -291,6 +291,8 @@ public abstract class Piece extends JButton implements ActionListener {
         //Vertical moves---------------------------------------------------------
         for (int i = x + 1; i < 8; i++) {
             Board.hasMove[i][y] = true;
+
+
             if (Board.hasPiece[i][y]) {
                 break;
             }

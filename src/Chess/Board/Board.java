@@ -16,6 +16,9 @@ public class Board extends JPanel {
     public static MouseAdapter[][] clickMouseListener = new MouseAdapter[8][8]; //don't make private
     public static boolean isWhiteTurn;
     public static boolean[][] hasMove = new boolean[8][8];
+    public static int[] possibleX = new int[8];
+    public static int[] possibleY = new int[8];
+    public static int count;
 
     public Board(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
@@ -77,7 +80,6 @@ public class Board extends JPanel {
                     getPiece(i, j).removeMouseListener(Board.clickMouseListener[i][j]);
                 } catch (Exception e) {
                 }
-                hasMove[i][j] = false;
                 getCase(i, j).setBorder(null);
                 getCase(i, j).removeMouseListener(Board.clickMouseListener[i][j]);
                 getCase(i, j).repaint();
@@ -85,10 +87,10 @@ public class Board extends JPanel {
         }
     }
 
-    public static void unDetectMoveAll() {
+    public static void unDetectAllMoves() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Board.hasMove[i][j] = false;
+                hasMove[i][j] = false;
             }
         }
     }
@@ -126,6 +128,16 @@ public class Board extends JPanel {
 
     public static void addPanel(int x, int y, JPanel panel) {
         chessCase[x][y] = panel;
+    }
+
+    public static void setAllPieceStatus(Piece piece, boolean status, char team) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (Board.hasPiece[i][j] && (Board.getPiece(i,j) != piece) && (Board.getPiece(i,j).team == team)) {
+                    Board.getPiece(i,j).setEnabled(status);
+                }
+            }
+        }
     }
 }
 

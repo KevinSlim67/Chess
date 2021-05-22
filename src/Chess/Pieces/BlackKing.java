@@ -3,6 +3,8 @@ package Chess.Pieces;
 import Chess.Board.Board;
 import Chess.Main;
 
+import java.awt.event.ActionEvent;
+
 public class BlackKing extends Piece {
     private WhiteRook whiteRook1;
     private WhiteRook whiteRook2;
@@ -13,11 +15,29 @@ public class BlackKing extends Piece {
     private WhiteQueen whiteQueen;
     private WhiteKing whiteKing;
     private WhitePawn[] whitePawn = new WhitePawn[8];
+    public boolean inDanger;
 
     public BlackKing() {
         super("black_king.png");
         team = 'b';
         this.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if ((Board.isWhiteTurn && team == 'w') || (!Board.isWhiteTurn && team == 'b')) {
+            if (e.getSource() == this) {
+                if (actionPerformedActive) {
+                    possibleMoves(currentX, currentY);
+                }
+                if (Main.frame.setBoard.blackKing.inDanger) {
+                    Board.setAllPieceStatus(this, false, 'b');
+                    System.out.println("Activated");
+                } else {
+                    Board.setAllPieceStatus(this, true, 'b');
+                }
+            }
+        }
     }
 
     public void possibleMoves(int x, int y) {
@@ -26,7 +46,7 @@ public class BlackKing extends Piece {
             kingMoves(x, y);
             detectKill(x, y);
             detectForbiddenMoves();
-            hasCollision(x, y);
+            hasCollision();
             Board.setClickedCase(x, y, true);
         } else {
             unDetectKill(x, y);
@@ -54,8 +74,7 @@ public class BlackKing extends Piece {
         }
     }
 
-    @Override
-    public void hasCollision(int x, int y) {
+    public void hasCollision() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (Board.hasMove[i][j]) {
@@ -68,8 +87,8 @@ public class BlackKing extends Piece {
     public void detectForbiddenMoves() {
         whiteRook1.possibleRookMoves(whiteRook1.getCurrentX(), whiteRook1.getCurrentY());
         whiteRook2.possibleRookMoves(whiteRook2.getCurrentX(), whiteRook2.getCurrentY());
-        whiteBishop1.possibleBishopMoves(whiteBishop1.getCurrentX(),whiteBishop1.getCurrentY());
-        whiteBishop2.possibleBishopMoves(whiteBishop2.getCurrentX(),whiteBishop2.getCurrentY());
+        whiteBishop1.possibleBishopMoves(whiteBishop1.getCurrentX(), whiteBishop1.getCurrentY());
+        whiteBishop2.possibleBishopMoves(whiteBishop2.getCurrentX(), whiteBishop2.getCurrentY());
         whiteKnight1.possibleKnightMoves(whiteKnight1.getCurrentX(), whiteKnight1.getCurrentY());
         whiteKnight2.possibleKnightMoves(whiteKnight2.getCurrentX(), whiteKnight2.getCurrentY());
         whiteKing.possibleKingMoves(whiteKing.getCurrentX(), whiteKing.getCurrentY());
@@ -91,6 +110,13 @@ public class BlackKing extends Piece {
         whiteKing = Main.frame.setBoard.whiteKing;
         for (int i = 0; i < 8; i++) {
             whitePawn[i] = Main.frame.setBoard.whitePawn[i];
+        }
+    }
+
+    public void kingInDanger() {
+        if (Board.hasMove[currentX][currentY]) {
+            inDanger = true;
+            Board.setAllPieceStatus(this, false, 'b');
         }
     }
 }

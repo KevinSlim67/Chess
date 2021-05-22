@@ -1,5 +1,7 @@
 package Chess.Board;
 
+import Chess.Main;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -36,6 +38,11 @@ public class TurnIndicator extends JLabel {
             this.setBackground(black);
             this.setForeground(white);
             this.setText("Black Team is playing");
+            if (numberOfTurns != 0) { /*the if statement is a half-baked solution to get around the bug that makes it
+                so the first move you make is always triggering the hasMove condition in kingInDanger() */
+                 Main.frame.setBoard.blackKing.detectForbiddenMoves();
+                 Main.frame.setBoard.blackKing.kingInDanger();
+            }
         }
 
         numberOfTurns++;
