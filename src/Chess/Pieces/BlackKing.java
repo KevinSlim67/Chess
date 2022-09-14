@@ -30,12 +30,12 @@ public class BlackKing extends Piece {
                 if (actionPerformedActive) {
                     possibleMoves(currentX, currentY);
                 }
-                if (Main.frame.setBoard.blackKing.inDanger) {
-                    Board.setAllPieceStatus(this, false, 'b');
-                    System.out.println("Activated");
-                } else {
-                    Board.setAllPieceStatus(this, true, 'b');
-                }
+//                if (Main.frame.setBoard.blackKing.inDanger) {
+//                    Board.setAllPieceStatus(this, false, 'b');
+//                    System.out.println("Activated");
+//                } else {
+//                    Board.setAllPieceStatus(this, true, 'b');
+//                }
             }
         }
     }

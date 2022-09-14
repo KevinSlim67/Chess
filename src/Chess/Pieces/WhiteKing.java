@@ -3,6 +3,8 @@ package Chess.Pieces;
 import Chess.Board.Board;
 import Chess.Main;
 
+import java.awt.event.ActionEvent;
+
 public class WhiteKing extends Piece {
     private BlackRook blackRook1;
     private BlackRook blackRook2;
@@ -18,6 +20,23 @@ public class WhiteKing extends Piece {
         super("white_king.png");
         team = 'w';
         this.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if ((!Board.isWhiteTurn && team == 'b') || (Board.isWhiteTurn && team == 'w')) {
+            if (e.getSource() == this) {
+                if (actionPerformedActive) {
+                    possibleMoves(currentX, currentY);
+                }
+//                if (Main.frame.setBoard.blackKing.inDanger) {
+//                    Board.setAllPieceStatus(this, false, 'b');
+//                    System.out.println("Activated");
+//                } else {
+//                    Board.setAllPieceStatus(this, true, 'b');
+//                }
+            }
+        }
     }
 
     public void possibleMoves(int x, int y) {
