@@ -77,7 +77,7 @@ public class BlackKing extends Piece {
     public void hasCollision() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (Board.hasMove[i][j]) {
+                if (Board.enemyHasMove[i][j]) {
                     unHighlight(i, j);
                 }
             }
@@ -114,7 +114,7 @@ public class BlackKing extends Piece {
     }
 
     public void kingInDanger() {
-        if (Board.hasMove[currentX][currentY]) {
+        if (Board.enemyHasMove[currentX][currentY]) {
             inDanger = true;
             Board.setAllPieceStatus(this, false, 'b');
         }

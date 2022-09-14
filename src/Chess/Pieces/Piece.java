@@ -16,6 +16,7 @@ public abstract class Piece extends JButton implements ActionListener {
     protected int currentY;
     public char team;
     public boolean actionPerformedActive;
+    protected boolean[][] hasMove = new boolean[8][8];
 
     public Piece(String piecePath) {
         this.setLayout(new BorderLayout());
@@ -46,6 +47,7 @@ public abstract class Piece extends JButton implements ActionListener {
         Border border = BorderFactory.createLineBorder(new Color(0x94dccb), 2);
         Board.getCase(x, y).setBorder(border);
         Board.getCase(x, y).repaint();
+        hasMove[x][y] = true;
 
         if (Board.hasPiece[x][y]) {
             kill(x, y, this); //kills the piece at (x, y)
@@ -76,6 +78,7 @@ public abstract class Piece extends JButton implements ActionListener {
                 Board.setAllClickedCaseFalse();
 
                 //shows on the terminal what movement just happened
+                hasMove[x][y] = false;
                 System.out.println("moved " + piece.getClass().getSimpleName() +
                         " from (" + currentX + " , " + currentY + "), to (" + x + " , " + y + ")");
 
@@ -290,7 +293,7 @@ public abstract class Piece extends JButton implements ActionListener {
     public void possibleRookMoves(int x, int y) {
         //Vertical moves---------------------------------------------------------
         for (int i = x + 1; i < 8; i++) {
-            Board.hasMove[i][y] = true;
+            Board.enemyHasMove[i][y] = true;
 
 
             if (Board.hasPiece[i][y]) {
@@ -299,7 +302,7 @@ public abstract class Piece extends JButton implements ActionListener {
         }
 
         for (int i = x - 1; i >= 0; i--) {
-            Board.hasMove[i][y] = true;
+            Board.enemyHasMove[i][y] = true;
             if (Board.hasPiece[i][y]) {
                 break;
             }
@@ -308,14 +311,14 @@ public abstract class Piece extends JButton implements ActionListener {
 
         //Horizontal moves--------------------------------------------------------
         for (int i = y + 1; i < 8; i++) {
-            Board.hasMove[x][i] = true;
+            Board.enemyHasMove[x][i] = true;
             if (Board.hasPiece[x][i]) {
                 break;
             }
         }
 
         for (int i = y - 1; i >= 0; i--) {
-            Board.hasMove[x][i] = true;
+            Board.enemyHasMove[x][i] = true;
             if (Board.hasPiece[x][i]) {
                 break;
             }
@@ -328,7 +331,7 @@ public abstract class Piece extends JButton implements ActionListener {
         int j = y + 1;
         for (int i = x + 1; i < 8; i++) {
             if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
-                Board.hasMove[i][j] = true;
+                Board.enemyHasMove[i][j] = true;
                 if (Board.hasPiece[i][j]) {
                     break;
                 } else {
@@ -340,7 +343,7 @@ public abstract class Piece extends JButton implements ActionListener {
         j = y - 1;
         for (int i = x - 1; i >= 0; i--) {
             if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
-                Board.hasMove[i][j] = true;
+                Board.enemyHasMove[i][j] = true;
                 if (Board.hasPiece[i][j]) {
                     break;
                 } else {
@@ -354,7 +357,7 @@ public abstract class Piece extends JButton implements ActionListener {
         j = y - 1;
         for (int i = x + 1; i < 8; i++) {
             if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
-                Board.hasMove[i][j] = true;
+                Board.enemyHasMove[i][j] = true;
                 if (Board.hasPiece[i][j]) {
                     break;
                 } else {
@@ -366,7 +369,7 @@ public abstract class Piece extends JButton implements ActionListener {
         j = y + 1;
         for (int i = x - 1; i >= 0; i--) {
             if ((i >= 0 && i < 8) && (j >= 0 && j < 8)) {
-                Board.hasMove[i][j] = true;
+                Board.enemyHasMove[i][j] = true;
                 if (Board.hasPiece[i][j]) {
                     break;
                 } else {
@@ -383,7 +386,7 @@ public abstract class Piece extends JButton implements ActionListener {
         int[] yMoves = {y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2};
         for (int i = 0; i < xMoves.length; i++)
             if ((xMoves[i] >= 0 && xMoves[i] < 8) && (yMoves[i] >= 0 && yMoves[i] < 8)) {
-                Board.hasMove[xMoves[i]][yMoves[i]] = true;
+                Board.enemyHasMove[xMoves[i]][yMoves[i]] = true;
             }
     }
 
@@ -393,7 +396,7 @@ public abstract class Piece extends JButton implements ActionListener {
         int[] yMoves = {y - 1, y, y + 1, y - 1, y, y + 1, y - 1, y + 1};
         for (int i = 0; i < xMoves.length; i++)
             if ((xMoves[i] >= 0 && xMoves[i] < 8) && (yMoves[i] >= 0 && yMoves[i] < 8)) {
-                Board.hasMove[xMoves[i]][yMoves[i]] = true;
+                Board.enemyHasMove[xMoves[i]][yMoves[i]] = true;
             }
     }
 
@@ -404,11 +407,11 @@ public abstract class Piece extends JButton implements ActionListener {
 
     public void possibleWhitePawnMoves(int x, int y) {
         try {
-            Board.hasMove[x - 1][y - 1] = true;
+            Board.enemyHasMove[x - 1][y - 1] = true;
         } catch (Exception e) {
         }
         try {
-            Board.hasMove[x - 1][y + 1] = true;
+            Board.enemyHasMove[x - 1][y + 1] = true;
         } catch (Exception e) {
         }
     }

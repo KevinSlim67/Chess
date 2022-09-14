@@ -33,8 +33,8 @@ public class Set extends Board {
         super(width, height);
 
         //queens
-        whiteQueen.setPiece(7, 4);
-        blackQueen.setPiece(0, 4);
+        whiteQueen.setPiece(7, 3);
+        blackQueen.setPiece(0, 3);
 
         //pawns
         for (int i = 0; i < 8; i++) {
@@ -69,8 +69,8 @@ public class Set extends Board {
         blackKnight2.setPiece(0, 6);
 
         //kings
-        whiteKing.setPiece(7, 3);
-        blackKing.setPiece(0, 3);
+        whiteKing.setPiece(7, 4);
+        blackKing.setPiece(0, 4);
 
     }
 }

@@ -15,7 +15,7 @@ public class Board extends JPanel {
     public static boolean[][] hasPiece = new boolean[8][8]; //don't make private
     public static MouseAdapter[][] clickMouseListener = new MouseAdapter[8][8]; //don't make private
     public static boolean isWhiteTurn;
-    public static boolean[][] hasMove = new boolean[8][8];
+    public static boolean[][] enemyHasMove = new boolean[8][8];
     public static int[] possibleX = new int[8];
     public static int[] possibleY = new int[8];
     public static int count;
@@ -90,7 +90,7 @@ public class Board extends JPanel {
     public static void unDetectAllMoves() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                hasMove[i][j] = false;
+                enemyHasMove[i][j] = false;
             }
         }
     }

@@ -57,7 +57,7 @@ public class WhiteKing extends Piece {
     public void hasCollision(int x, int y) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (Board.hasMove[i][j]) {
+                if (Board.enemyHasMove[i][j]) {
                     unHighlight(i, j);
                 }
             }
